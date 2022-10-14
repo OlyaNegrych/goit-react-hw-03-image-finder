@@ -1,18 +1,46 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Modal } from '../Modal/Modal';
 import {
   ImageGalleryItem,
   ImageGalleryItemIMG,
 } from './ImageGalleryItem.styled';
 
-export const GalleryItem = ({ images }) => {
-  return images.map(image => {
-    return (<ImageGalleryItem key={image.id}>
-      <ImageGalleryItemIMG src={image.webformatURL} alt={image.tags} />
-    </ImageGalleryItem>)
-  });
+export class GalleryItem extends Component {
+  state = {
+    showModal: false,
+  };
+
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
+  render() {
+    return (
+      <>
+        <ImageGalleryItem key={this.props.image.id}>
+          <ImageGalleryItemIMG
+            src={this.props.image.webformatURL}
+            alt={this.props.image.tags}
+            onClick={this.toggleModal}
+          />
+        </ImageGalleryItem>
+        {this.state.showModal && (
+          <Modal
+            image={this.props.image}
+            onCloseModal={this.toggleModal}
+          />
+        )}
+      </>
+    );
+  }
 }
 
-// ImageGalleryItem.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
+GalleryItem.propTypes = {
+  image: PropTypes.shape({
+      webformatURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    })
+};

@@ -1,11 +1,19 @@
+import { GalleryItem } from 'components/GalleryItem/GalleryItem';
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { ImageGallery } from './ImageGallery.styled';
 
-export const ImageGalleryList = ({children}) => {
-    return <ImageGallery>{children}</ImageGallery>;
+export const ImageGalleryList = ({images}) => {
+    return <ImageGallery>{images.map(image => (<GalleryItem key={image.id} image={image} />))}</ImageGallery>;
 }
 
-// SearchBar.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
+ImageGalleryList.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    })
+  ),
+};

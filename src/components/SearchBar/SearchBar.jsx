@@ -34,13 +34,16 @@ export class SearchBar extends Component {
       <Searchbar>
         <SearchForm onSubmit={this.handleSubmit}>
           <SearchFormBtn type="submit">
-            <AiOutlineSearch />
+            <AiOutlineSearch style={{ width: 25, height: 25 }} />
           </SearchFormBtn>
 
           <SearchFormInput
             onChange={this.handleChange}
             type="text"
+            autocomplete="off"
+            autoFocus
             placeholder="Search images and photos"
+            value={this.state.searchQuery}
           />
         </SearchForm>
       </Searchbar>
