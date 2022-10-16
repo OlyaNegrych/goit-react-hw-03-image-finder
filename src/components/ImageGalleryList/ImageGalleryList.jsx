@@ -3,17 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ImageGallery } from './ImageGallery.styled';
 
-export const ImageGalleryList = ({images}) => {
+export const ImageGalleryList = ({ images }) => {
     return <ImageGallery>{images.map(image => (<GalleryItem key={image.id} image={image} />))}</ImageGallery>;
 }
 
 ImageGalleryList.propTypes = {
   images: PropTypes.arrayOf(
-    PropTypes.exact({
+    PropTypes.shape({
       id: PropTypes.number.isRequired,
-      webformatURL: PropTypes.string.isRequired,
-      largeImageURL: PropTypes.string.isRequired,
-      tags: PropTypes.string.isRequired,
     })
   ),
 };

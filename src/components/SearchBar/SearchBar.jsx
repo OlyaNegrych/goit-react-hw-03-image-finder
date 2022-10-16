@@ -25,7 +25,7 @@ export class SearchBar extends Component {
             Notiflix.Notify.warning('Enter word to find images');
             return
         }
-        this.props.onSubmit(this.state.searchQuery);
+        this.props.onSubmit(this.state.searchQuery.toLocaleLowerCase().trim());
         this.setState({ searchQuery: '' });
   };
 
