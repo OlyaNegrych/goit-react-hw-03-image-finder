@@ -1,6 +1,6 @@
 export const smoothScroll = () => {
   const { height: cardHeight } = document
-    .querySelector('ul')
+    .querySelector('.gallery')
     .firstElementChild.getBoundingClientRect();
 
   window.scrollBy({

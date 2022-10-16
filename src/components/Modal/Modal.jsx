@@ -1,27 +1,42 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { createPortal } from 'react-dom';
 import { Overlay, ModalImg } from '../Modal/Modal.styled';
 
-export class Modal extends Component {
+const modalRoot = document.querySelector('#modal-root');
 
-  handleCloseModal = (e) => {
+export class Modal extends Component {
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = e => {
+    if (e.code === 'Escape') {
+      this.props.onCloseModal();
+    }
+  };
+
+  handleCloseModal = e => {
     if (e.target.nodeName === 'IMG') {
-      return
+      return;
     }
     this.props.onCloseModal();
-}
+  };
 
   render() {
-   return (
-     <Overlay onClick={this.handleCloseModal}>
-       <ModalImg>
-         <img
-           src={this.props.image.largeImageURL}
-           alt={this.props.image.tags}
-         />
-       </ModalImg>
-     </Overlay>
-   );
+    return createPortal(
+      <Overlay onClick={this.handleCloseModal}>
+        <ModalImg>
+          <img
+            src={this.props.image.largeImageURL}
+            alt={this.props.image.tags}
+          />
+        </ModalImg>
+      </Overlay>,
+      modalRoot
+    );
+  }
 }
-}
-
-

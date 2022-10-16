@@ -7,7 +7,7 @@ import { Box } from '../App/App.styled';
 import { ImageGalleryList } from 'components/ImageGalleryList/ImageGalleryList';
 import { GalleryItem } from 'components/GalleryItem/GalleryItem';
 import { LoadMoreBtn } from '../Button/Button';
-import { smoothScroll } from '../../services/smoothScroll';
+// import { smoothScroll } from '../../services/smoothScroll';
 
 export class App extends Component {
   state = {
@@ -25,10 +25,15 @@ export class App extends Component {
     ) {
       this.setState({ isLoading: true });
       try {
-        const images = await API.getImages({
+          const images = await API.getImages({
           searchQuery: this.state.searchQuery,
           page: this.state.page,
-        });
+          });
+        if (images.totalHits === 0) {
+          Notiflix.Notify.failure(
+            'Sorry, there are no images matching your search query. Please try again.'
+          );
+        }
         this.setState({
           images: [...this.state.images, ...images.hits],
           totalHits: images.totalHits,
@@ -64,7 +69,7 @@ export class App extends Component {
         `We're sorry, but you've reached the end of search results.`
       );
     }
-    smoothScroll();
+    // smoothScroll();
   };
 
   render() {

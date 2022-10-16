@@ -14,3 +14,4 @@ ImageGalleryList.propTypes = {
     })
   ),
 };
+
